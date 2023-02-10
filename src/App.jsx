@@ -1,7 +1,12 @@
-import './index.css';
+import { Post } from './components/Post';
 
-function App() {
-    return <h1>Hello, World!</h1>;
+export function App() {
+    return (
+        <main>
+            <Post author="Tautvydas" body="React.js is awesome!" />
+            <Post author="Anonymous" body="We are legion" />
+            <Post author="Hagrid" body="Your're a wizard, Harry" />
+            <Post author="Morphius" body="You are the chosen One, Neo" />
+        </main>
+    );
 }
-
-export default App;
