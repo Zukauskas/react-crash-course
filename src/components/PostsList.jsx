@@ -4,34 +4,33 @@ import { Post } from './Post';
 import { Modal } from './Modal';
 import styles from './PostsList.module.css';
 
-export function PostsList() {
-    const [modalIsOpen, setModalIsOpen] = useState(true);
-    const [enteredBody, setEnteredBody] = useState('');
-    const [enteredAuthor, setEnteredAuthor] = useState('');
+export function PostsList({ isPosting, onStopPosting }) {
+    const [posts, setPosts] = useState([]);
 
-    function modalCloseHandler() {
-        setModalIsOpen(false);
-    }
-
-    function bodyChangeHandler(event) {
-        setEnteredBody(event.target.value);
-    }
-
-    function authorChangeHandler(event) {
-        setEnteredAuthor(event.target.value);
+    function addPostHandler(postData) {
+        setPosts((existingPosts) => [postData, ...existingPosts]);
     }
 
     return (
         <>
-            {modalIsOpen ? (
-                <Modal onClose={modalCloseHandler}>
-                    <NewPost onBodyChange={bodyChangeHandler} onAuthorChange={authorChangeHandler} />
+            {isPosting && (
+                <Modal onClose={onStopPosting}>
+                    <NewPost onCancel={onStopPosting} onAddPost={addPostHandler} />
                 </Modal>
-            ) : null}
-            <ul className={styles.posts}>
-                <Post author={enteredAuthor} body={enteredBody} />
-                <Post author="Morphius" body="You are the chosen One, Neo" />
-            </ul>
+            )}
+            {posts.length > 0 && (
+                <ul className={styles.posts}>
+                    {posts.map((post) => (
+                        <Post key={post.body} author={post.author} body={post.body} />
+                    ))}
+                </ul>
+            )}
+            {posts.length === 0 && (
+                <div className={styles.noPosts}>
+                    <h2>No posts yet!</h2>
+                    <p>Be the first to post something!</p>
+                </div>
+            )}
         </>
     );
 }
