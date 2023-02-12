@@ -7,7 +7,7 @@ export function MainHeader({ onCreatePost }) {
         <header className={styles.header}>
             <h1 className={styles.logo}>
                 <MdMessage />
-                React Poster
+                React Message Board
             </h1>
             <p>
                 <button className={styles.button} onClick={onCreatePost}>
