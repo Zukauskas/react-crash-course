@@ -1,23 +1,12 @@
-import { useState } from 'react';
-import { NewPost } from './NewPost';
+import { useLoaderData } from 'react-router-dom';
 import { Post } from './Post';
-import { Modal } from './Modal';
 import styles from './PostsList.module.css';
 
-export function PostsList({ isPosting, onStopPosting }) {
-    const [posts, setPosts] = useState([]);
-
-    function addPostHandler(postData) {
-        setPosts((existingPosts) => [postData, ...existingPosts]);
-    }
+export function PostsList() {
+    const posts = useLoaderData();
 
     return (
         <>
-            {isPosting && (
-                <Modal onClose={onStopPosting}>
-                    <NewPost onCancel={onStopPosting} onAddPost={addPostHandler} />
-                </Modal>
-            )}
             {posts.length > 0 && (
                 <ul className={styles.posts}>
                     {posts.map((post) => (
